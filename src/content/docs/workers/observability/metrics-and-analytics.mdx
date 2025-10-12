@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Metrics and analytics
 sidebar:
   order: 1
-head: []
+head: []4
 description: Diagnose issues with Workers metrics, and review request data for a
   zone with Workers analytics.
 
@@ -77,73 +77,4 @@ To review invocation statuses:
 5. Select **Errors**.
 </Steps>
 
-Worker invocation statuses indicate whether a Worker executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/observability/errors/#error-pages-generated-by-workers) being returned to the client.
-
-
-
-| Invocation status      | Definition                                                                   | Workers error code | GraphQL field          |
-| ---------------------- | ---------------------------------------------------------------------------- | ------------------ | ---------------------- |
-| Success                | Worker executed successfully                                                 |                    | `success`              |
-| Client disconnected    | HTTP client (that is, the browser) disconnected before the request completed |                    | `clientDisconnected`   |
-| Worker threw exception | Worker threw an unhandled JavaScript exception                               | 1101               | `scriptThrewException` |
-| Exceeded resources¹    | Worker exceeded runtime limits                                               | 1102, 1027         | `exceededResources`    |
-| Internal error²        | Workers runtime encountered an error                                         |                    | `internalError`        |
-
-
-
-¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-limits). The most common cause is excessive CPU time, but is also caused by a Worker exceeding startup time or free tier limits.
-
-² The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Worker code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [www.cloudflarestatus.com](https://www.cloudflarestatus.com/).
-
-To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/commands/#tail).
-
-### Request duration
-
-The request duration chart shows how long it took your Worker to respond to requests, including code execution and time spent waiting on I/O. The request duration chart is currently only available when your Worker has [Smart Placement](/workers/configuration/smart-placement) enabled.
-
-In contrast to [execution duration](/workers/observability/metrics-and-analytics/#execution-duration-gb-seconds), which measures only the time a Worker is active, request duration measures from the time a request comes into a data center until a response is delivered.
-
-The data shows the duration for requests with Smart Placement enabled compared to those with Smart Placement disabled (by default, 1% of requests are routed with Smart Placement disabled). The chart shows a histogram with duration across the x-axis and the percentage of requests that fall into the corresponding duration on the y-axis.
-
-### Metrics retention
-
-Worker metrics can be inspected for up to three months in the past in maximum increments of one week.
-
-## Zone analytics
-
-Zone analytics aggregate request data for all Workers assigned to any [routes](/workers/configuration/routing/routes/) defined for a zone.
-
-To review zone metrics:
-
-<Steps>
-1. In the Cloudflare dashboard, go to the **Analytics & Logs** page for your zone.
-
-   <DashButton url="/?to=/:account/:zone/analytics" />
-
-2. Select **Workers**.
-</Steps>
-
-Zone data can be scoped by time range within the last 30 days. The dashboard includes charts and information described below.
-
-### Subrequests
-
-This chart shows subrequests — requests triggered by calling `fetch` from within a Worker — broken down by cache status.
-
-* **Uncached**: Requests answered directly by your origin server or other servers responding to subrequests.
-* **Cached**: Requests answered by Cloudflare’s [cache](https://www.cloudflare.com/learning/cdn/what-is-caching/). As Cloudflare caches more of your content, it accelerates content delivery and reduces load on your origin.
-
-### Bandwidth
-
-This chart shows historical bandwidth usage for all Workers on a zone broken down by cache status.
-
-### Status codes
-
-This chart shows historical requests for all Workers on a zone broken down by HTTP status code.
-
-### Total requests
-
-This chart shows historical data for all Workers on a zone broken down by successful requests, failed requests, and subrequests. These request types are categorized by HTTP status code where `200`-level requests are successful and `400` to `500`-level requests are failed.
-
-## GraphQL
-
-Worker metrics are powered by GraphQL. Learn more about querying our data sets in the [Querying Workers Metrics with GraphQL tutorial](/analytics/graphql-api/tutorials/querying-workers-metrics/).
+Worker invocation statuses indicate whether a Worker executed succe
